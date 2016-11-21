@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "Custom rule implementations in order to fullfill typescript style guide of MULTA MEDIO AG",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "./bin/postinstaller.sh",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc -p src/tsconfig.json"
   },
   "author": "Thomas Handwerker <thandwerker@multamedio.de>",
   "license": "ISC",
   "devDependencies": {
-    "tslint": "^4.0.1",
-    "typescript": "^2.0.10"
+    "tslint": "3.15.1",
+    "typescript": "2.0.3"
   }
 }

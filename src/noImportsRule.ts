@@ -1,5 +1,5 @@
-import * as Lint from "tslint";
 import * as ts from "typescript";
+import * as Lint from "tslint/lib/lint";
 
 export class Rule extends Lint.Rules.AbstractRule {
     public static FAILURE_STRING = "import statement forbidden";
@@ -12,6 +12,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 // The walker takes care of all the work.
 class NoImportsWalker extends Lint.RuleWalker {
     public visitImportDeclaration(node: ts.ImportDeclaration) {
+      console.log("hier bin ich");
         // create a failure at the current position
         this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING));
 
