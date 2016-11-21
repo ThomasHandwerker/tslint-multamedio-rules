@@ -1,0 +1,12 @@
+.DS_Store
+.tscache/
+node_modules/
+tscommand*.txt
+npm-debug.log
+
+# created by grunt-ts for faster compiling
+typings/.basedir.ts
+
+# vim swap files
+*.swo
+*.swp

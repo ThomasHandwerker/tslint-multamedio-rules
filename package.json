@@ -1,0 +1,14 @@
+{
+  "name": "tslint-multamedio-rules",
+  "version": "1.0.0",
+  "description": "Custom rule implementations in order to fullfill typescript style guide of MULTA MEDIO AG",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Thomas Handwerker <thandwerker@multamedio.de>",
+  "license": "ISC",
+  "devDependencies": {
+    "tslint": "^4.0.1",
+    "typescript": "^2.0.10"
+  }
+}
