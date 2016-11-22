@@ -1,14 +1,17 @@
 {
   "name": "tslint-multamedio-rules",
   "version": "1.0.0",
-  "description": "Custom rule implementations in order to fullfill typescript style guide of MULTA MEDIO AG",
+  "description": "Custom rule implementations for tslint, in order to fullfill typescript style guide of MULTA MEDIO AG",
   "scripts": {
+    "compile": "tsc -p src/tsconfig.json",
+    "postinstall": "./bin/postinstaller.sh",
+    "postuninstall": "./bin/postuninstaller.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Thomas Handwerker <thandwerker@multamedio.de>",
   "license": "ISC",
   "devDependencies": {
-    "tslint": "^4.0.1",
-    "typescript": "^2.0.10"
+    "tslint": "3.15.1",
+    "typescript": "2.0.3"
   }
 }

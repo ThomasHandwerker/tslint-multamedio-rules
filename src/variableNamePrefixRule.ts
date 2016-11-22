@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
+import * as Lint from "tslint/lib/lint";
 import * as ts from "typescript";
-import * as Lint from "tslint";
 
 const OPTION_CLASS_PREFIX = "class-prefix";
 const OPTION_FUNCTION_PREFIX = "function-prefix";
@@ -60,7 +60,6 @@ export class Rule extends Lint.Rules.AbstractRule {
         },
         optionExamples: ['[true, "class-prefix", "parameter-prefix", "jqery-prefix"]'],
         type: "style",
-        typescriptOnly: true,
     };
     /* tslint:enable:object-literal-sort-keys */
 
@@ -102,7 +101,12 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
         return kind === ts.SyntaxKind.MethodDeclaration;
     }
 
+    public visitSourceFile(node: ts.SourceFile) {
+        super.visitSourceFile(node);
+    }
+
     public visitVariableDeclaration(node: ts.VariableDeclaration) {
+      console.error('visit variable');
         const nextScopeKind: ts.SyntaxKind = this.getNextRelevantScopeOfNode(node);
 
         if (node.name.kind === ts.SyntaxKind.Identifier) {
@@ -121,6 +125,7 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
     }
 
     public visitParameterDeclaration(node: ts.ParameterDeclaration) {
+      console.error('visit parameter');
         if (this.shouldCheckParameterPrefix || this.shouldCheckJqueryPrefix) {
             if (node.name.kind === ts.SyntaxKind.Identifier) {
                 const identifier = <ts.Identifier> node.name;
@@ -133,6 +138,7 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
     }
 
     public visitClassDeclaration(node: ts.ClassDeclaration) {
+      console.error('visit class');
         if (this.shouldCheckClassPrefix || this.shouldCheckJqueryPrefix) {
             const members = <ts.NodeArray<ts.ClassElement>> node.members;
 
@@ -149,6 +155,7 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
     }
 
     public visitFunctionDeclaration(node: ts.FunctionDeclaration) {
+      console.error('visit function');
         if (this.shouldCheckParameterPrefix || this.shouldCheckJqueryPrefix) {
             const functionParams = <ts.NodeArray<ts.ParameterDeclaration>> node.parameters;
 
