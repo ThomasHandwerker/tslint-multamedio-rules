@@ -8,10 +8,22 @@
     "postuninstall": "./bin/postuninstaller.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.informagic.net/thandwerker/tslint-multamedio-rules.git"
+  },
+  "keywords": [
+    "linter",
+    "typescript",
+    "custom-rules"
+  ],
   "author": "Thomas Handwerker <thandwerker@multamedio.de>",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "devDependencies": {
     "tslint": "3.15.1",
     "typescript": "2.0.3"
+  },
+  "peerDependencies": {
+    "tslint": "3.15.1"
   }
 }
