@@ -6,7 +6,7 @@
     "compile": "tsc -p src/tsconfig.json",
     "postinstall": "./bin/postinstaller.sh",
     "postuninstall": "./bin/postuninstaller.sh",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node build/test/ruleTestRunner.js"
   },
   "repository": {
     "type": "git",

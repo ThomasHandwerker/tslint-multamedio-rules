@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "variable-name-prefix": [
+      true,
+      "class-prefix"
+    ]
+  },
+  "linterOptions": {
+    "typeCheck": true
+  }
+}

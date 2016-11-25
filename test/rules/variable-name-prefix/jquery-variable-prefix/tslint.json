@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "variable-name-prefix": [
+      true,
+      "jquery-prefix"
+    ]
+  },
+  "linterOptions": {
+    "typeCheck": true
+  }
+}

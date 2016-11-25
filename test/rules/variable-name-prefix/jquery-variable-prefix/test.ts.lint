@@ -1,0 +1,51 @@
+var jqueryVariable :JQuery = "huhu";
+    ~~~~~~~~~~~~~~                      [variable name of type JQuery must start with "$" as prefix]
+var gJqueryVar :JQuery = "buuuh";
+    ~~~~~~~~~~                          [variable name of type JQuery must start with "$" as prefix]
+var $variable :JQuery = "yeah";
+var $gVariable :JQuery = "cool";
+var gVariable = "huhu";
+var variable = "no";
+
+
+// function scope
+function myJQueryTest(parameter :JQuery) {
+                      ~~~~~~~~~                     [variable name of type JQuery must start with "$" as prefix]
+    let $validJQuery1 :JQuery = "My";
+    let invalidJQuery1 :JQuery = "world";
+        ~~~~~~~~~~~~~~                       [variable name of type JQuery must start with "$" as prefix]
+    const validTest1 = ".";
+    
+    try {}
+    catch(aValidExceptionParam) {}
+    
+    try {}
+    catch(invalidExceptionParam) {}
+}
+
+var testFunction :Function = () => {
+    let $validJQuery2 :JQuery = "Typescript";
+    const invalidJquery2 :JQuery = "like";
+          ~~~~~~~~~~~~~~                        [variable name of type JQuery must start with "$" as prefix]
+    var validTest2 = "function.";
+}
+
+
+// class context
+class TestClass {
+    private $classJQuery :JQuery = "My";
+    public invalidClassJquery :JQuery = "Name";
+           ~~~~~~~~~~~~~~~~~~                       [variable name of type JQuery must start with "$" as prefix]
+
+
+    public testMethod1(invalidParam1, aParameterInvalid1 :JQuery) {
+                                      ~~~~~~~~~~~~~~~~~~                        [variable name of type JQuery must start with "$" as prefix]
+        var $jquery :JQuery = "Hello";
+        let tValidName2 = "World";
+    }
+
+    private invalidTestMethod1(aValidParam2, gInvalidParameter2) {
+        var invalidName1 :JQuery = "How";
+            ~~~~~~~~~~~~                        [variable name of type JQuery must start with "$" as prefix]
+    }
+}

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import * as Lint from "tslint/lib/lint";
 import * as ts from "typescript";
+import * as Lint from "tslint/lib/lint";
 
 const OPTION_CLASS_PREFIX = "class-prefix";
 const OPTION_FUNCTION_PREFIX = "function-prefix";
@@ -71,7 +71,8 @@ export class Rule extends Lint.Rules.AbstractRule {
     public static JQUERY_PREFIX_FAILURE = "variable name of type JQuery must start with \"$\" as prefix";
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-        return this.applyWithWalker(new VariableNamePrefixWalker(sourceFile, this.getOptions()));
+        const variableNamePrefixWalker = new VariableNamePrefixWalker(sourceFile, this.getOptions());
+        return this.applyWithWalker(variableNamePrefixWalker);
     }
 }
 
@@ -100,16 +101,16 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
     public isMethodDeclaration(kind: ts.SyntaxKind): boolean {
         return kind === ts.SyntaxKind.MethodDeclaration;
     }
-
-    public visitSourceFile(node: ts.SourceFile) {
-        super.visitSourceFile(node);
+    
+    public isCatchClause(kind: ts.SyntaxKind): boolean {
+      return kind === ts.SyntaxKind.WithStatement
+            || kind === ts.SyntaxKind.TryStatement;
     }
 
     public visitVariableDeclaration(node: ts.VariableDeclaration) {
-      console.error('visit variable');
         const nextScopeKind: ts.SyntaxKind = this.getNextRelevantScopeOfNode(node);
 
-        if (node.name.kind === ts.SyntaxKind.Identifier) {
+        if (node.name.kind === ts.SyntaxKind.Identifier && this.isCatchClause(nextScopeKind) === false) {
             const identifier = <ts.Identifier> node.name;
 
             if ((this.isFunctionDeclaration(nextScopeKind) || this.isMethodDeclaration(nextScopeKind))
@@ -125,7 +126,6 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
     }
 
     public visitParameterDeclaration(node: ts.ParameterDeclaration) {
-      console.error('visit parameter');
         if (this.shouldCheckParameterPrefix || this.shouldCheckJqueryPrefix) {
             if (node.name.kind === ts.SyntaxKind.Identifier) {
                 const identifier = <ts.Identifier> node.name;
@@ -138,7 +138,6 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
     }
 
     public visitClassDeclaration(node: ts.ClassDeclaration) {
-      console.error('visit class');
         if (this.shouldCheckClassPrefix || this.shouldCheckJqueryPrefix) {
             const members = <ts.NodeArray<ts.ClassElement>> node.members;
 
@@ -155,7 +154,6 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
     }
 
     public visitFunctionDeclaration(node: ts.FunctionDeclaration) {
-      console.error('visit function');
         if (this.shouldCheckParameterPrefix || this.shouldCheckJqueryPrefix) {
             const functionParams = <ts.NodeArray<ts.ParameterDeclaration>> node.parameters;
 
@@ -184,6 +182,17 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
 
         super.visitFunctionDeclaration(node);
     }
+    
+    public visitCatchClause(node: ts.CatchClause) {
+      const catchVariable = <ts.VariableDeclaration> node.variableDeclaration;
+      
+      if (this.shouldCheckParameterPrefix && catchVariable) {
+        const identifier = <ts.Identifier> catchVariable.name;
+        this.handleVariableNameFormat(PARAMETER_PREFIX, identifier, Rule.PARAMETER_PREFIX_FAILURE);
+      }
+      
+      super.visitCatchClause(node);
+    }
 
     private getTypeOfIdentifier(identifier: ts.Identifier) {
         const declaration = <ts.VariableDeclaration> identifier.parent;
@@ -197,10 +206,12 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
 
     private getNextRelevantScopeOfNode(node: ts.Node): ts.SyntaxKind {
         const scopes: ts.SyntaxKind[] = [
+          ts.SyntaxKind.ClassDeclaration,
             ts.SyntaxKind.FunctionDeclaration,
             ts.SyntaxKind.FunctionExpression,
             ts.SyntaxKind.MethodDeclaration,
-            ts.SyntaxKind.ClassDeclaration,
+            ts.SyntaxKind.WithStatement,
+            ts.SyntaxKind.TryStatement
         ];
 
         return isNodeDeclaredInRelevantScope(node, scopes);

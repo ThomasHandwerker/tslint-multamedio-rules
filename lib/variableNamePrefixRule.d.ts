@@ -14,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as Lint from "tslint/lib/lint";
 import * as ts from "typescript";
+import * as Lint from "tslint/lib/lint";
 export declare class Rule extends Lint.Rules.AbstractRule {
     static metadata: Lint.IRuleMetadata;
     static CLASS_PREFIX_FAILURE: string;
