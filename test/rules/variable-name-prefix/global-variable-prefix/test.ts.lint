@@ -1,0 +1,62 @@
+// global context
+var gValidNameGlobal1 = "Hey";
+var gVALIDNAMEGLOBAL2 = "there";
+
+var invalidGlobal1 = "how";
+    ~~~~~~~~~~~~~~                  [global variable name must start with "g" as prefix followed by an uppercase letter]
+const iNvalidGlobal2 = "are";
+      ~~~~~~~~~~~~~~                [global variable name must start with "g" as prefix followed by an uppercase letter]
+let tInvalidGlobal3 = "you";
+    ~~~~~~~~~~~~~~~                 [global variable name must start with "g" as prefix followed by an uppercase letter]
+var aInvalidGlobal4 = "today";
+    ~~~~~~~~~~~~~~~                 [global variable name must start with "g" as prefix followed by an uppercase letter]
+
+
+var gGlobalFunc = function(aParameter, tParameter, invalidParam1) {
+    var tValidFunc1 = "Func";
+    var tVALIDFUNC2 = "tion";
+
+    var iNvAlIDFunc1 = "is";
+    var aINVALIDFunc2 = "invalid";
+}
+
+
+// function context
+function testFunction(aParameter, tParameter) {
+    var iInvalidFunc3 = "Wow";
+    var iNVALIDFunc4 = "there";
+
+    var tValidFunc3 = 1;
+    var tVALIDFUNC4 = 3;
+    
+    try {}
+    catch(aValidExceptionParam) {}
+    
+    try {}
+    catch(invalidExceptionParam) {}
+}
+
+
+// class context
+class TestClass {
+    private iClassValid1 = "My";
+    public iClassValid2 = "Name";
+    public abstract iClassValid3 = "is"
+    private classInvalid1 = "User";
+    protected classInvalid2 = "";
+    public gClassInvalid3 = "User";
+    public tClassInvalid4 = "Name";
+
+
+    public testMethod1(invalidParam1, aParameterValid1) {
+        var tValidName1 = "Hello";
+        let tValidName2 = "World";
+        const tValidName3 = ".";
+    }
+
+    private invalidTestMethod1(aValidParam2, gInvalidParameter2) {
+        var invalidName1 = "How";
+        let testInvalidName2 = "are";
+        const gVariable = "you";
+    }
+}

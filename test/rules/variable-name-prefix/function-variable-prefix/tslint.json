@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "variable-name-prefix": [true, 
+      "function-prefix"
+    ]
+  },
+  "linterOptions": {
+    "typeCheck": true
+  }
+}

@@ -1,0 +1,61 @@
+// global context
+var gValidNameGlobal1 = "Hey";
+var gVALIDNAMEGLOBAL2 = "there";
+
+var invalidGlobal1 = "how";
+var iNvalidGlobal2 = "are";
+var tInvalidGlobal3 = "you";
+var aInvalidGlobal4 = "today";
+
+var gGlobalFunc = function(aParameter, tParameter, invalidParam1) {
+    var tValidFunc1 = "Func";
+    var tVALIDFUNC2 = "tion";
+
+    var iNvAlIDFunc1 = "is";
+    var aINVALIDFunc2 = "invalid";
+}
+
+
+// function context
+function testFunction(aParameter, tParameter) {
+    var iInvalidFunc3 = "Wow";
+    var iNVALIDFunc4 = "there";
+
+    var tValidFunc3 = 1;
+    var tVALIDFUNC4 = 3;
+    
+    try {}
+    catch(aValidExceptionParam) {}
+    
+    try {}
+    catch(invalidExceptionParam) {}
+}
+
+
+// class context
+class TestClass {
+    private iClassValid1 = "My";
+    public iClassValid2 = "Name";
+    public abstract iClassValid3 = "is"
+    private classInvalid1 = "User";
+            ~~~~~~~~~~~~~               [variable name in class scope must start with "i" as prefix followed by uppercase letter]
+    protected classInvalid2 = "";
+              ~~~~~~~~~~~~~                [variable name in class scope must start with "i" as prefix followed by uppercase letter]
+    public gClassInvalid3 = "User";
+           ~~~~~~~~~~~~~~                [variable name in class scope must start with "i" as prefix followed by uppercase letter]
+    public tClassInvalid4 = "Name";
+           ~~~~~~~~~~~~~~               [variable name in class scope must start with "i" as prefix followed by uppercase letter]
+
+
+    public testMethod1(invalidParam1, aParameterValid1) {
+        var tValidName1 = "Hello";
+        let tValidName2 = "World";
+        const tValidName3 = ".";
+    }
+
+    private invalidTestMethod1(aValidParam2, gInvalidParameter2) {
+        var invalidName1 = "How";
+        let testInvalidName2 = "are";
+        const gVariable = "you";
+    }
+}

@@ -1,0 +1,15 @@
+{
+  "rules": {
+    "variable-name-prefix": [
+      true,
+      "class-prefix",
+      "function-prefix",
+      "global-prefix",
+      "parameter-prefix",
+      "jquery-prefix"
+    ]
+  },
+  "linterOptions": {
+    "typeCheck": true
+  }
+}
