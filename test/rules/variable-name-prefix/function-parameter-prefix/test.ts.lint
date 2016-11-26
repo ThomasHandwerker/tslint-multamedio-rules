@@ -26,10 +26,10 @@ function testFunction(aParameter, tParameter) {
 
     var tValidFunc3 = 1;
     var tVALIDFUNC4 = 3;
-    
+
     try {}
     catch(aValidExceptionParam) {}
-    
+
     try {}
     catch(invalidExceptionParam) {}
           ~~~~~~~~~~~~~~~~~~~~~         [parameter name must start with "a" as prefix followed by an uppercase letter]
@@ -45,6 +45,10 @@ class TestClass {
     protected classInvalid2 = "";
     public gClassInvalid3 = "User";
     public tClassInvalid4 = "Name";
+
+    constructor(aValidParam, invalidParam, aInvalidJQueryParam :JQuery) {
+                             ~~~~~~~~~~~~                                   [parameter name must start with "a" as prefix followed by an uppercase letter]
+    }
 
 
     public testMethod1(invalidParam1, aParameterValid1) {

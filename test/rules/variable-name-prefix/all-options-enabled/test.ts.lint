@@ -41,10 +41,10 @@ function testFunction(aParameter, tParameter: JQuery) {
     let tJQueryPrefix :JQuery = "dev";
         ~~~~~~~~~~~~~                               [variable name of type JQuery must start with "$" as prefix]
     const $tValidJQueryPrefix :JQuery = "there";
-    
+
     try {}
     catch(aValidExceptionParam) {}
-    
+
     try {}
     catch(invalidExceptionParam) {}
           ~~~~~~~~~~~~~~~~~~~~~         [parameter name must start with "a" as prefix followed by an uppercase letter]
@@ -65,6 +65,11 @@ class TestClass {
     public tClassInvalid4 = "Name";
            ~~~~~~~~~~~~~~               [variable name in class scope must start with "i" as prefix followed by uppercase letter]
 
+
+    constructor(aValidParam, invalidParam, aInvalidJQueryParam :JQuery) {
+                             ~~~~~~~~~~~~                                    [parameter name must start with "a" as prefix followed by an uppercase letter]
+                                           ~~~~~~~~~~~~~~~~~~~               [variable name of type JQuery must start with "$" as prefix]
+    }
 
     public testMethod1(invalidParam1, aParameterInValid1: JQuery) {
                        ~~~~~~~~~~~~~                                    [parameter name must start with "a" as prefix followed by an uppercase letter]

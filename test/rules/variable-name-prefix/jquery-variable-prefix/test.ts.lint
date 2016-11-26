@@ -15,10 +15,10 @@ function myJQueryTest(parameter :JQuery) {
     let invalidJQuery1 :JQuery = "world";
         ~~~~~~~~~~~~~~                       [variable name of type JQuery must start with "$" as prefix]
     const validTest1 = ".";
-    
+
     try {}
     catch(aValidExceptionParam) {}
-    
+
     try {}
     catch(invalidExceptionParam) {}
 }
@@ -37,6 +37,10 @@ class TestClass {
     public invalidClassJquery :JQuery = "Name";
            ~~~~~~~~~~~~~~~~~~                       [variable name of type JQuery must start with "$" as prefix]
 
+
+    constructor(aValidParam, invalidParam, aInvalidJQueryParam :JQuery) {
+                                           ~~~~~~~~~~~~~~~~~~~               [variable name of type JQuery must start with "$" as prefix]
+    }
 
     public testMethod1(invalidParam1, aParameterInvalid1 :JQuery) {
                                       ~~~~~~~~~~~~~~~~~~                        [variable name of type JQuery must start with "$" as prefix]
