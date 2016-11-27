@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "ordered-import-aliases": [
+      true,
+      "lowercase-last"
+    ]
+  }
+}

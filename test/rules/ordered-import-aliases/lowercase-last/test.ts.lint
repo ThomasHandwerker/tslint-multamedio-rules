@@ -1,0 +1,25 @@
+import bar = de.bar.B;
+import Foo = de.foo.F;
+~~~~~~~~~~~~~~~~~~~~~~      [ordered-aliases]
+import Zap = de.zap.Z;
+
+import Bar = de.bar.B;
+import Zap = de.zap.Z;
+import foo = de.foo.F;
+
+
+namespace de.test {
+
+  import bar = de.bar.B;
+  import Foo = de.foo.F;
+  ~~~~~~~~~~~~~~~~~~~~~~      [ordered-aliases]
+  import Zap = de.zap.D;
+
+  import Bar = de.bar.B;
+  import Zap = de.zap.Z;
+  import foo = de.foo.F;
+
+}
+
+
+[ordered-aliases]: Import aliases within a group must be alphabetized (lowercase-last).
