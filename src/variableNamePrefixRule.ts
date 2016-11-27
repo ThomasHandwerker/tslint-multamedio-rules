@@ -64,7 +64,7 @@ export class Rule extends Lint.Rules.AbstractRule {
   /* tslint:enable:object-literal-sort-keys max-line-length */
 
   public static CLASS_PREFIX_FAILURE :string =
-    'variable name in class scope must start with \'i\' as prefix followed by uppercase letter';
+    'variable name in class scope must start with \"i\" as prefix followed by uppercase letter';
   public static FUNCTION_PREFIX_FAILURE :string =
     'variable name in function/method scope must start' +
     ' with \"t\" as prefix followed by an uppercase letter';

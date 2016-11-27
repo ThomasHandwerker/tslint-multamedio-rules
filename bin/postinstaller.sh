@@ -17,18 +17,20 @@ sourcePath="./lib"
 
 # add custom rule implementation files here
 declare -a filesToLinkArray=(
+  "orderedImportAliasesRule.js"
+  "orderedImportAliasesRule.d.ts"
   "variableNamePrefixRule.js"
   "variableNamePrefixRule.d.ts"
 )
 
 for file in "${filesToLinkArray[@]}"
 do
-  
+
   if ! [ -h "$targetPath/$file" ]
   then
-    echo "Create symbolic link for file $file"
-    ln -s "$(readlink -f $sourcePath/$file)" $targetPath/$file
+    echo "Create hard link via 'ln' command for file $file"
+    ln -f "$(readlink -f $sourcePath/$file)" $targetPath/$file
   fi
 done
 
-echo "Symlinks for custom rules are successfully created."
+echo "Links for custom rules are successfully created."
