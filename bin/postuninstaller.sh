@@ -8,8 +8,8 @@ targetPath="../tslint/lib/rules"
 
 # add custom rule implementation files here
 declare -a filesToRemoveArray=(
-  "orderedImportAliases.js"
-  "orderedImportAliases.d.ts"
+  "orderedImportAliasesRule.js"
+  "orderedImportAliasesRule.d.ts"
   "variableNamePrefixRule.js"
   "variableNamePrefixRule.d.ts"
 )
