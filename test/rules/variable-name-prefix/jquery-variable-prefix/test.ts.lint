@@ -21,6 +21,9 @@ function myJQueryTest(parameter :JQuery) {
 
     try {}
     catch(invalidExceptionParam) {}
+
+    for (let $i :JQuery = 0; i < 10; i++) {
+    }
 }
 
 var testFunction :Function = () => {
