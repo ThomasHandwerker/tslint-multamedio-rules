@@ -1,101 +1,13 @@
-// global context
-var $gGlobalJQueryValid :JQuery = "Yeah";
-var gGlobalValid = "it is";
-
-let gGobalJQueryInvalid1 :JQuery = "working";
-    ~~~~~~~~~~~~~~~~~~~~                            [variable name of type JQuery must start with "$" as prefix]
-const globalJQueryInvalid2 :JQuery = "fine";
-      ~~~~~~~~~~~~~~~~~~~~                          [global variable name must start with "g" as prefix followed by an uppercase letter]
-      ~~~~~~~~~~~~~~~~~~~~                          [variable name of type JQuery must start with "$" as prefix]
-
-var invalidGlobal1 = "."
-    ~~~~~~~~~~~~~~                      [global variable name must start with "g" as prefix followed by an uppercase letter]
-
-var gGlobalFunc = function(aParameter, $tInvalidParameter :JQuery, $invalidParam1 :JQuery) {
-                                       ~~~~~~~~~~~~~~~~~~                                       [parameter name must start with "a" as prefix followed by an uppercase letter]
-                                                                   ~~~~~~~~~~~~~~               [parameter name must start with "a" as prefix followed by an uppercase letter]
-    var tValidFunc1 = "Func";
-    var tVALIDFUNC2 = "tion";
-
-    var iNvAlIDFunc1 = "is";
-        ~~~~~~~~~~~~                            [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
-    var aINVALIDFunc2 :JQuery = "invalid";
-        ~~~~~~~~~~~~~                           [variable name of type JQuery must start with "$" as prefix]
-        ~~~~~~~~~~~~~                           [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
-}
 
 
-// function context
-function testFunction(aParameter, tParameter: JQuery) {
-                                  ~~~~~~~~~~                            [parameter name must start with "a" as prefix followed by an uppercase letter]
-                                  ~~~~~~~~~~                            [variable name of type JQuery must start with "$" as prefix]
-    var iInvalidFunc3 = "Wow";
-        ~~~~~~~~~~~~~                   [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
-    var iNVALIDFunc4 = "there";
-        ~~~~~~~~~~~~                    [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
-    var tValidFunc3 = 1;
-    var tVALIDFUNC4 = 3;
+// test *.spec file context
+describe('sample test suite', () => {
+   var testSuiteVar :number = 0;
+       ~~~~~~~~~~~~                     [global variable name must start with "g" as prefix followed by an uppercase letter]
 
-    let $jqueryInvalidPrefix :JQuery = "null";
-        ~~~~~~~~~~~~~~~~~~~~                        [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
-    let tJQueryPrefix :JQuery = "dev";
-        ~~~~~~~~~~~~~                               [variable name of type JQuery must start with "$" as prefix]
-    const $tValidJQueryPrefix :JQuery = "there";
-
-    try {}
-    catch(aValidExceptionParam) {}
-
-    try {}
-    catch(invalidExceptionParam) {}
-          ~~~~~~~~~~~~~~~~~~~~~         [parameter name must start with "a" as prefix followed by an uppercase letter]
-}
-
-
-// class context
-class TestClass {
-    private iClassValid1 = "My";
-    public iClassValid2 = "Name";
-    public abstract iClassValid3 = "is"
-    private classInvalid1 = "User";
-            ~~~~~~~~~~~~~               [variable name in class scope must start with "i" as prefix followed by uppercase letter]
-    protected classInvalid2 = "";
-              ~~~~~~~~~~~~~                [variable name in class scope must start with "i" as prefix followed by uppercase letter]
-    public gClassInvalid3 = "User";
-           ~~~~~~~~~~~~~~                [variable name in class scope must start with "i" as prefix followed by uppercase letter]
-    public tClassInvalid4 = "Name";
-           ~~~~~~~~~~~~~~               [variable name in class scope must start with "i" as prefix followed by uppercase letter]
-
-
-    constructor(aValidParam, invalidParam, aInvalidJQueryParam :JQuery) {
-                             ~~~~~~~~~~~~                                    [parameter name must start with "a" as prefix followed by an uppercase letter]
-                                           ~~~~~~~~~~~~~~~~~~~               [variable name of type JQuery must start with "$" as prefix]
-    }
-
-    public testMethod1(invalidParam1, aParameterInValid1: JQuery) {
-                       ~~~~~~~~~~~~~                                    [parameter name must start with "a" as prefix followed by an uppercase letter]
-                                      ~~~~~~~~~~~~~~~~~~                [variable name of type JQuery must start with "$" as prefix]
-        var tValidName1 = "Hello";
-        let tValidName2 = "World";
-        const tValidName3 = ".";
-
-        var aInValidJQuery: JQuery = ">dev";
-            ~~~~~~~~~~~~~~                           [variable name of type JQuery must start with "$" as prefix]
-            ~~~~~~~~~~~~~~                           [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
-        var tInvalidJQuery: JQuery = "/null";
-            ~~~~~~~~~~~~~~                          [variable name of type JQuery must start with "$" as prefix]
-        let $tEveryFineJQuery: JQuery = "";
-    }
-
-    private invalidTestMethod1(aValidParam2, gInvalidParameter2: JQuery) {
-                                             ~~~~~~~~~~~~~~~~~~                 [variable name of type JQuery must start with "$" as prefix]
-                                             ~~~~~~~~~~~~~~~~~~                 [parameter name must start with "a" as prefix followed by an uppercase letter]
-        var invalidName1 = "How";
-            ~~~~~~~~~~~~                             [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
-        let testInvalidName2 = "are";
-            ~~~~~~~~~~~~~~~~                        [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
-        const gVariable :JQuery = "you";
-              ~~~~~~~~~                             [variable name of type JQuery must start with "$" as prefix]
-              ~~~~~~~~~                             [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
-        let $tEverythingOkay: JQuery = "finish";
-    }
+  it('should return true', (done :Function) => {
+                            ~~~~                        [parameter name must start with "a" as prefix followed by an uppercase letter]
+    var testCaseVar :number = 10;
+        ~~~~~~~~~~~                       [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
+  }
 }

@@ -114,8 +114,29 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
       || kind === ts.SyntaxKind.TryStatement;
   }
 
+  public isArrowFunction(kind :ts.SyntaxKind) :boolean {
+    return kind === ts.SyntaxKind.ArrowFunction;
+  }
+
+  private findCallExpressionParentNode(node :ts.Node) :ts.CallExpression {
+    if (node.kind === ts.SyntaxKind.CallExpression)
+      return <ts.CallExpression> node;
+
+    return this.findCallExpressionParentNode(node.parent);
+  }
+
   public visitVariableDeclaration(node :ts.VariableDeclaration) :void {
     const nextScopeKind :ts.SyntaxKind = this.getNextRelevantScopeOfNode(node);
+
+    if (this.isArrowFunction(nextScopeKind)) {
+      const exprNode :ts.CallExpression = this.findCallExpressionParentNode(node);
+      const exprLabel :string = exprNode.expression.getText();
+
+      if (exprLabel === 'describe')
+        console.log('describe -> g prefix');
+      else if (exprLabel === 'it')
+        console.log('it -> t prefix');
+    }
 
     if (node.name.kind === ts.SyntaxKind.Identifier && this.isCatchClause(nextScopeKind) === false) {
       const identifier :ts.Identifier = <ts.Identifier> node.name;
@@ -216,7 +237,8 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
       ts.SyntaxKind.FunctionExpression,
       ts.SyntaxKind.MethodDeclaration,
       ts.SyntaxKind.WithStatement,
-      ts.SyntaxKind.TryStatement
+      ts.SyntaxKind.TryStatement,
+      ts.SyntaxKind.ArrowFunction /* in test case e.g. it() or describe() */
     ];
 
     return isNodeDeclaredInRelevantScope(node, scopes);
