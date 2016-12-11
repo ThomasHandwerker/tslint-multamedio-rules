@@ -27,12 +27,15 @@ function testFunction(aParameter, tParameter) {
 
     var tValidFunc3 = 1;
     var tVALIDFUNC4 = 3;
-    
+
     try {}
     catch(aValidExceptionParam) {}
-    
+
     try {}
     catch(invalidExceptionParam) {}
+
+    for (let i :number = 0; i < 10; i++) {
+    }
 }
 
 

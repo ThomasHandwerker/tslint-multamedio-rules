@@ -237,7 +237,8 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
     const variableName :string = reviseVariableName(identifier.text, hasVariableJQueryPrefix);
 
     if (
-        (this.shouldCheckGlobalPrefix || this.shouldCheckParameterPrefix || this.shouldCheckFunctionPrefix
+        isVariableNameLongerThan(1, variableName, hasVariableJQueryPrefix) && (this.shouldCheckGlobalPrefix
+        || this.shouldCheckParameterPrefix || this.shouldCheckFunctionPrefix
         || this.shouldCheckClassPrefix) && !isValidPrefix(prefix, variableName)) {
       this.addFailure(this.createFailure(
         identifier.getStart(), identifier.getWidth(), ruleFailure));
@@ -294,6 +295,13 @@ function isJQueryType(type :ts.TypeNode) :boolean {
     return false;
 
   return type.getText() === 'JQuery';
+}
+
+function isVariableNameLongerThan(threshold :number, name :string, hasJQueryPrefix :boolean) :boolean {
+  if (hasJQueryPrefix === true)
+    name = name.substr(1, name.length);
+
+  return name.length > threshold;
 }
 
 function isValidJQueryPrefix(prefix :string, name :string) :boolean {
