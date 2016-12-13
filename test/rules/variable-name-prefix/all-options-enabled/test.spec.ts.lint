@@ -1,0 +1,11 @@
+// test *.spec file context
+describe('sample test suite', () => {
+   var testSuiteVar :number = 0;
+       ~~~~~~~~~~~~                     [global variable name must start with "g" as prefix followed by an uppercase letter]
+
+  it('should return true', (done :Function) => {
+                            ~~~~                        [parameter name must start with "a" as prefix followed by an uppercase letter]
+    var testCaseVar :number = 10;
+        ~~~~~~~~~~~                       [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
+  }
+}
