@@ -89,9 +89,12 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
   private shouldCheckParameterPrefix :boolean;
   private shouldCheckFunctionPrefix :boolean;
   private shouldCheckClassPrefix :boolean;
+  private isUnitTestSpecFile :boolean;
 
   constructor(sourceFile :ts.SourceFile, options :Lint.IOptions) {
     super(sourceFile, options);
+
+    this.isUnitTestSpecFile = sourceFile.fileName.indexOf('.spec') > -1;
 
     this.shouldCheckGlobalPrefix = this.hasOption(OPTION_GLOBAL_PREFIX);
     this.shouldCheckJqueryPrefix = this.hasOption(OPTION_JQUERY_PREFIX);
@@ -114,17 +117,51 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
       || kind === ts.SyntaxKind.TryStatement;
   }
 
+  public isArrowFunction(kind :ts.SyntaxKind) :boolean {
+    return kind === ts.SyntaxKind.ArrowFunction;
+  }
+
+  private findCallExpressionParentNode(node :ts.Node) :ts.CallExpression {
+    if (typeof node !== 'undefined' && node.kind === ts.SyntaxKind.CallExpression)
+      return <ts.CallExpression> node;
+    else if (typeof node !== 'undefined')
+      return this.findCallExpressionParentNode(node.parent);
+
+    return null;
+  }
+
   public visitVariableDeclaration(node :ts.VariableDeclaration) :void {
     const nextScopeKind :ts.SyntaxKind = this.getNextRelevantScopeOfNode(node);
+    let isDescribeContext :boolean = false;
+    let isItContext :boolean = false;
+
+    /**
+     * FIXME: please do some refactoring! necessary at this position
+     */
+    if (this.isUnitTestSpecFile && this.isArrowFunction(nextScopeKind)) {
+      const exprNode :ts.CallExpression = this.findCallExpressionParentNode(node);
+      let exprLabel :string = null;
+
+      if (exprNode === null)
+        return;
+
+      exprLabel = exprNode.expression.getText();
+
+      if (exprLabel === 'describe')
+        isDescribeContext = true;
+      else if (exprLabel === 'it')
+        isItContext = true;
+    }
 
     if (node.name.kind === ts.SyntaxKind.Identifier && this.isCatchClause(nextScopeKind) === false) {
       const identifier :ts.Identifier = <ts.Identifier> node.name;
 
-      if ((this.isFunctionDeclaration(nextScopeKind) || this.isMethodDeclaration(nextScopeKind))
+      if ((this.isFunctionDeclaration(nextScopeKind) || this.isMethodDeclaration(nextScopeKind)
+            || isItContext)
             && (this.shouldCheckFunctionPrefix || this.shouldCheckJqueryPrefix) ) {
         this.handleVariableNameFormat(FUNCTION_PREFIX, identifier, Rule.FUNCTION_PREFIX_FAILURE);
-      } else if (!this.isFunctionDeclaration(nextScopeKind) && !this.isMethodDeclaration(nextScopeKind)
-            && (this.shouldCheckGlobalPrefix || this.shouldCheckJqueryPrefix) ) {
+      } else if ( (!this.isFunctionDeclaration(nextScopeKind) && !this.isMethodDeclaration(nextScopeKind)
+            || isDescribeContext) && (this.shouldCheckGlobalPrefix || this.shouldCheckJqueryPrefix) ) {
         this.handleVariableNameFormat(GLOBAL_PREFIX, identifier, Rule.GLOBAL_PREFIX_FAILURE);
       }
     }
@@ -216,7 +253,8 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
       ts.SyntaxKind.FunctionExpression,
       ts.SyntaxKind.MethodDeclaration,
       ts.SyntaxKind.WithStatement,
-      ts.SyntaxKind.TryStatement
+      ts.SyntaxKind.TryStatement,
+      ts.SyntaxKind.ArrowFunction /* in test case e.g. it() or describe() */
     ];
 
     return isNodeDeclaredInRelevantScope(node, scopes);
