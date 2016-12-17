@@ -1,6 +1,6 @@
 {
   "name": "tslint-multamedio-rules",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Custom rule implementations for tslint, in order to fullfill typescript style guide of MULTA MEDIO AG",
   "scripts": {
     "compile": "tsc -p src/tsconfig.json",
