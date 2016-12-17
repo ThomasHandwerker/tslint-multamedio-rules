@@ -1,0 +1,8 @@
+// test *.spec file context
+describe('sample test suite', () => {
+  var gTestSuiteVar :number = 0;
+
+  it('should return true', () => {
+    var tTestCaseVar :number = 10;
+  }
+}
