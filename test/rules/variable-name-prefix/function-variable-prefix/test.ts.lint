@@ -65,12 +65,3 @@ class TestClass {
               ~~~~~~~~~                     [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
     }
 }
-
-// test *.spec file context
-describe('sample test suite', () => {
-  var gTestSuiteVar :number = 0;
-
-  it('should return true', () => {
-    var tTestCaseVar :number = 10;
-  }
-}

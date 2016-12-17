@@ -132,36 +132,30 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
 
   public visitVariableDeclaration(node :ts.VariableDeclaration) :void {
     const nextScopeKind :ts.SyntaxKind = this.getNextRelevantScopeOfNode(node);
-    let isDescribeContext :boolean = false;
-    let isItContext :boolean = false;
+    let callExpression :ts.CallExpression;
 
-    /**
-     * FIXME: please do some refactoring! necessary at this position
-     */
     if (this.isUnitTestSpecFile && this.isArrowFunction(nextScopeKind)) {
-      const exprNode :ts.CallExpression = this.findCallExpressionParentNode(node);
-      let exprLabel :string = null;
+      callExpression = this.findCallExpressionParentNode(node);
 
-      if (exprNode === null)
-        return;
-
-      exprLabel = exprNode.expression.getText();
-
-      if (exprLabel === 'describe')
-        isDescribeContext = true;
-      else if (exprLabel === 'it')
-        isItContext = true;
+      if (callExpression === null) { return; }
     }
 
     if (node.name.kind === ts.SyntaxKind.Identifier && this.isCatchClause(nextScopeKind) === false) {
       const identifier :ts.Identifier = <ts.Identifier> node.name;
 
       if ((this.isFunctionDeclaration(nextScopeKind) || this.isMethodDeclaration(nextScopeKind)
-            || isItContext)
+            || (this.isArrowFunction(nextScopeKind) && this.isUnitTestSpecFile === false )
+            || (this.isArrowFunction(nextScopeKind) && this.isUnitTestSpecFile
+                && isItContextOfTestFile(callExpression)
+            ))
             && (this.shouldCheckFunctionPrefix || this.shouldCheckJqueryPrefix) ) {
         this.handleVariableNameFormat(FUNCTION_PREFIX, identifier, Rule.FUNCTION_PREFIX_FAILURE);
       } else if ( (!this.isFunctionDeclaration(nextScopeKind) && !this.isMethodDeclaration(nextScopeKind)
-            || isDescribeContext) && (this.shouldCheckGlobalPrefix || this.shouldCheckJqueryPrefix) ) {
+            || (this.isArrowFunction(nextScopeKind) && this.isUnitTestSpecFile === false )
+            || (this.isArrowFunction(nextScopeKind) && this.isUnitTestSpecFile
+                && isDescribeContextOfTestFile(callExpression)
+            ))
+            && (this.shouldCheckGlobalPrefix || this.shouldCheckJqueryPrefix) ) {
         this.handleVariableNameFormat(GLOBAL_PREFIX, identifier, Rule.GLOBAL_PREFIX_FAILURE);
       }
     }
@@ -366,4 +360,12 @@ function isUpperCaseCharacter(character :string) :boolean {
     return true;
 
   return false;
+}
+
+function isItContextOfTestFile(callExpression :ts.CallExpression) :boolean {
+  return 'it' === callExpression.expression.getText();
+}
+
+function isDescribeContextOfTestFile(callExpression :ts.CallExpression) :boolean {
+  return 'describe' === callExpression.expression.getText();
 }
