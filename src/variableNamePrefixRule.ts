@@ -181,8 +181,10 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
 
       members.forEach((member :ts.ClassElement) => {
         const identifier :ts.Identifier = <ts.Identifier> member.name;
+        const hasStaticModifier :boolean = containStaticModifier(member.modifiers);
 
-        if (identifier && identifier.kind === ts.SyntaxKind.Identifier && this.isPropertyDeclaration(member))
+        if (identifier && identifier.kind === ts.SyntaxKind.Identifier
+            && this.isPropertyDeclaration(member) && hasStaticModifier === false)
           this.handleVariableNameFormat(CLASS_PREFIX, identifier, Rule.CLASS_PREFIX_FAILURE);
       });
     }
@@ -368,4 +370,18 @@ function isItContextOfTestFile(callExpression :ts.CallExpression) :boolean {
 
 function isDescribeContextOfTestFile(callExpression :ts.CallExpression) :boolean {
   return 'describe' === callExpression.expression.getText();
+}
+
+function containStaticModifier(modifiers :ts.ModifiersArray) :boolean {
+  if (typeof modifiers === 'undefined')
+    return false;
+
+  let containStatic :boolean = false;
+
+  modifiers.forEach((modifier :ts.Modifier) => {
+    if (modifier.kind === ts.SyntaxKind.StaticKeyword)
+      containStatic = true;
+  });
+
+  return containStatic;
 }
