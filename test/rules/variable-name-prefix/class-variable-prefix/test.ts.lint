@@ -23,10 +23,10 @@ function testFunction(aParameter, tParameter) {
 
     var tValidFunc3 = 1;
     var tVALIDFUNC4 = 3;
-    
+
     try {}
     catch(aValidExceptionParam) {}
-    
+
     try {}
     catch(invalidExceptionParam) {}
 }
@@ -34,6 +34,10 @@ function testFunction(aParameter, tParameter) {
 
 // class context
 class TestClass {
+
+    private static MY_VARIABLE = [];
+    private static iVALID_NAME = [];
+
     private iClassValid1 = "My";
     public iClassValid2 = "Name";
     public abstract iClassValid3 = "is"
