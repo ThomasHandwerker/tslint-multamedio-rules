@@ -49,6 +49,12 @@ class TestClass {
     public gClassInvalid3 = "User";
     public tClassInvalid4 = "Name";
 
+    constructor(aValidParam, invalidParam, aInvalidJQueryParam :JQuery) {
+      var invalidConstructorVar = "Not";
+          ~~~~~~~~~~~~~~~~~~~~~                                             [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
+      var tValidConstructorVar = "True";
+    }
+
 
     public testMethod1(invalidParam1, aParameterValid1) {
         var tValidName1 = "Hello";

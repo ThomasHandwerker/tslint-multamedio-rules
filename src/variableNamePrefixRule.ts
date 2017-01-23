@@ -103,6 +103,10 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
     this.shouldCheckClassPrefix = this.hasOption(OPTION_CLASS_PREFIX);
   }
 
+  public isConstructorDeclaration(kind :ts.SyntaxKind) :boolean {
+    return kind === ts.SyntaxKind.Constructor;
+  }
+
   public isFunctionDeclaration(kind :ts.SyntaxKind) :boolean {
     return kind === ts.SyntaxKind.FunctionDeclaration
       || kind === ts.SyntaxKind.FunctionExpression;
@@ -144,6 +148,7 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
       const identifier :ts.Identifier = <ts.Identifier> node.name;
 
       if ((this.isFunctionDeclaration(nextScopeKind) || this.isMethodDeclaration(nextScopeKind)
+          || this.isConstructorDeclaration(nextScopeKind)
             || (this.isArrowFunction(nextScopeKind) && this.isUnitTestSpecFile === false )
             || (this.isArrowFunction(nextScopeKind) && this.isUnitTestSpecFile
                 && isItContextOfTestFile(callExpression)
@@ -151,6 +156,7 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
             && (this.shouldCheckFunctionPrefix || this.shouldCheckJqueryPrefix) ) {
         this.handleVariableNameFormat(FUNCTION_PREFIX, identifier, Rule.FUNCTION_PREFIX_FAILURE);
       } else if ( (!this.isFunctionDeclaration(nextScopeKind) && !this.isMethodDeclaration(nextScopeKind)
+          && !this.isConstructorDeclaration(nextScopeKind)
             || (this.isArrowFunction(nextScopeKind) && this.isUnitTestSpecFile === false )
             || (this.isArrowFunction(nextScopeKind) && this.isUnitTestSpecFile
                 && isDescribeContextOfTestFile(callExpression)
@@ -245,6 +251,7 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
   private getNextRelevantScopeOfNode(node :ts.Node) :ts.SyntaxKind {
     const scopes :ts.SyntaxKind[] = [
       ts.SyntaxKind.ClassDeclaration,
+      ts.SyntaxKind.Constructor,
       ts.SyntaxKind.FunctionDeclaration,
       ts.SyntaxKind.FunctionExpression,
       ts.SyntaxKind.MethodDeclaration,
