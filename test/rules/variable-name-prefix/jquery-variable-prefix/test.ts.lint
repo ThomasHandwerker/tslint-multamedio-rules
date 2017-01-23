@@ -4,6 +4,9 @@ var gJqueryVar :JQuery = "buuuh";
     ~~~~~~~~~~                          [variable name of type JQuery must start with "$" as prefix]
 var $variable :JQuery = "yeah";
 var $gVariable :JQuery = "cool";
+var $gVarArray :JQuery[] = "ArrayOfDomElements";
+var gVarArrayInvalid :JQuery[] = "ArrayOfAnotherDomElement";
+    ~~~~~~~~~~~~~~~~                       [variable name of type JQuery must start with "$" as prefix]
 var gVariable = "huhu";
 var variable = "no";
 
