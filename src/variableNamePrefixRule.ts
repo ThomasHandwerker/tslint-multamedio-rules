@@ -335,7 +335,7 @@ function isJQueryType(type :ts.TypeNode) :boolean {
   if (typeof type === 'undefined')
     return false;
 
-  return type.getText() === 'JQuery';
+  return type.getText() === 'JQuery' || type.getText() === 'JQuery[]';
 }
 
 function isVariableNameLongerThan(threshold :number, name :string, hasJQueryPrefix :boolean) :boolean {
