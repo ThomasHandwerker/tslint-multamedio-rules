@@ -4,6 +4,7 @@
   "description": "Custom rule implementations for tslint, in order to fullfill typescript style guide of MULTA MEDIO AG",
   "scripts": {
     "compile": "tsc -p src/tsconfig.json",
+    "dist": "mkdir -p dist && npm pack && mv tslint-multamedio* dist",
     "postinstall": "./bin/postinstaller.sh",
     "postuninstall": "./bin/postuninstaller.sh",
     "test": "node build/test/ruleTestRunner.js",

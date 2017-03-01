@@ -1,6 +1,7 @@
 .DS_Store
 .tscache/
 build
+dist
 node_modules/
 tscommand*.txt
 npm-debug.log
