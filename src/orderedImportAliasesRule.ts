@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint';
 import * as ts from 'typescript';
 
 const OPTION_CASE_INSENSITIVE :string = 'case-insensitive';
@@ -56,12 +56,13 @@ export class Rule extends Lint.Rules.AbstractRule {
       '[true, "case-insensitive"]',
       '[true, "lowercase-first"]'
     ],
-    type: 'style'
+    type: 'style',
+    typescriptOnly: true
   };
   /* tslint:enable:object-literal-sort-keys */
 
   public static IMPORT_ALIASES_UNORDERED :string =
-    'Import aliases within a group must be alphabetized';
+  'Import aliases within a group must be alphabetized';
 
   public apply(sourceFile :ts.SourceFile) :Lint.RuleFailure[] {
     const orderedImportAliasesWalker :OrderedImportAliasesWalker =
@@ -74,16 +75,17 @@ export class Rule extends Lint.Rules.AbstractRule {
 // convert aBcD --> aBcD
 function flipCase(x :string) :string {
   return x.split('').map((char :string) => {
-    if (char >= 'a' && char <= 'z')
+    if (char >= 'a' && char <= 'z') {
       return char.toUpperCase();
-    else if (char >= 'A' && char <= 'Z')
+    } else if (char >= 'A' && char <= 'Z') {
       return char.toLowerCase();
+    }
 
     return char;
   }).join('');
 }
 
-const TRANSFORMS :{[ordering :string] :(x :string) => string} = {
+const TRANSFORMS :{ [ordering :string] :(x :string) => string } = {
   'case-insensitive': (x :string) => x.toLowerCase(),
   'lowercase-first': flipCase,
   'lowercase-last': (x :string) => x
@@ -91,9 +93,9 @@ const TRANSFORMS :{[ordering :string] :(x :string) => string} = {
 
 class OrderedImportAliasesWalker extends Lint.RuleWalker {
 
-  private optionSet :string = null;
-  private lastImportAlias :string = null;
-  private importAliasOrderTransform :(x :string) => string = null;
+  private optionSet :string = '';
+  private lastImportAlias :string | null = null;
+  private importAliasOrderTransform :(x :string) => string = () => '';
 
   constructor(sourceFile :ts.SourceFile, options :Lint.IOptions) {
     super(sourceFile, options);
@@ -121,14 +123,14 @@ class OrderedImportAliasesWalker extends Lint.RuleWalker {
    * Check for a blank line, in which case we should reset the import ordering.
    */
   public visitNode(node :ts.Node) :void {
-      const prefixLength :number = node.getStart() - node.getFullStart();
-      const prefix :string = node.getFullText().slice(0, prefixLength);
+    const prefixLength :number = node.getStart() - node.getFullStart();
+    const prefix :string = node.getFullText().slice(0, prefixLength);
 
-      if (prefix.indexOf('\n\n') >= 0 ||
-          prefix.indexOf('\r\n\r\n') >= 0) {
-          this.lastImportAlias = null;
-      }
-      super.visitNode(node);
+    if (prefix.indexOf('\n\n') >= 0 ||
+      prefix.indexOf('\r\n\r\n') >= 0) {
+      this.lastImportAlias = null;
+    }
+    super.visitNode(node);
   }
 
   private getParameterizedFailureText() :string {
