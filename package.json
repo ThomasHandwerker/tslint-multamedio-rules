@@ -3,11 +3,11 @@
   "version": "1.1.0",
   "description": "Custom rule implementations for tslint, in order to fullfill typescript style guide of MULTA MEDIO AG",
   "scripts": {
-    "compile": "tsc -p src/tsconfig.json",
+    "compile": "npm-run-all -p compile:rules compile:test",
+    "compile:rules": "tsc -p src/tsconfig.json",
+    "compile:test": "tsc -p test/tsconfig.json",
     "dist": "mkdir -p dist && npm pack && mv tslint-multamedio* dist",
-    "postinstall": "./bin/postinstaller.sh",
-    "postuninstall": "./bin/postuninstaller.sh",
-    "test": "node build/test/ruleTestRunner.js",
+    "test": "node build/test/testRunner.js",
     "watch": "nodemon -w src -w test -e \"ts,json,lint\" -x \"npm-run-all -p compile test\""
   },
   "repository": {
@@ -21,13 +21,17 @@
   ],
   "author": "Thomas Handwerker <thandwerker@multamedio.de>",
   "license": "Apache-2.0",
+  "dependencies": {
+    "tslint": "4.5.1"
+  },
   "devDependencies": {
-    "nodemon": "^1.11.0",
-    "npm-run-all": "^3.1.1",
-    "tslint": "3.15.1",
-    "typescript": "1.8.x"
+    "@types/glob": "^5.0.30",
+    "glob": "^7.1.1",
+    "nodemon": "1.11.0",
+    "npm-run-all": "3.1.1",
+    "typescript": "2.2.1"
   },
   "peerDependencies": {
-    "tslint": "3.15.1"
+    "tslint": "4.5.1"
   }
 }

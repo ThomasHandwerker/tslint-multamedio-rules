@@ -1,6 +1,7 @@
 {
+  "rulesDirectory": "../../../../lib",
   "rules": {
-    "variable-name-prefix": [true, 
+    "variable-name-prefix": [true,
       "parameter-prefix"
     ]
   },

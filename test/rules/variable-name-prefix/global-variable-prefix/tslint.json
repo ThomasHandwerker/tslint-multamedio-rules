@@ -1,4 +1,5 @@
 {
+  "rulesDirectory": "../../../../lib",
   "rules": {
     "variable-name-prefix": [true,
       "global-prefix"
