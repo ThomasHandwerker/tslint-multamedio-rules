@@ -5,19 +5,25 @@ In order to lint this characteristic we extend the basic rule set of tslint with
 
 At the moment this repository includes implementation for the following rules:
 * `variableNamePrefixRule`
+* `orderedImportAliasesRule`
 
-## Testing
-Testing is done with the `ruleTestRunner.js` which is included in the core repository of tslint. In order to use the runner we have to do some small prerequisites.
+## Compile
+The custom tslint rules are implemented in TypeScript. It is necessary to compile them into JavaScript. This can be easily done via the command line script `npm run compile`. It compile source and test files. For compilation there are the following scripts defined in `package.json`:
 
-### Prerequisites
-1. Clone the official `tslint` repository from GitHub ([Link](https://github.com/palantir/tslint)).
-2. Checkout version 3.15.1 with `git checkout 3.15.1`.
-3. Create sym link `build` in tslint-multamedio-rules to `~/<your-workspace>/tslint/build`.
-4. Run `npm install` and `npm run compile` to build custom rules.
-5. Create sym link of each custom rule into sym link `build/src/rules` to allow ruleTestRunner.js loading the custom rules.
+* `compile`: Compiles source and test files
+* `compile:core`: Compiles only source files
+* `compile:test`: Compiles only test files
 
-Finally, you can run the test command defined in `package.json` to verify the correctness of custom rule implementation:
- 
+## Tests
+After successfully compiling source and test files the implemented unit tests can be run. This verification can be easily done with the command
+
 ```shell
-$~ npm run test
+$~ npm tests
 ```
+
+It runs all specified test cases in the subfolders of `test/` and run it with the TSLint test runner. Some helpful hints for testing custom rules is available in the official documentation of TSLint: [Testing Rules](https://palantir.github.io/tslint/develop/testing-rules/)
+
+## Contribution
+It is as simple as possible. Submit a new merge request on GitHub which contain your changes or improvements. We will check your submit and then merge it to the `master`-branch.
+
+During implementation of your custom rule, it is very helpful to read the official docs first. There are advises on how to improve performance of rule implementation and other meaningful hints. [Official TSLint documentation on custom rules](https://palantir.github.io/tslint/develop/custom-rules/)
