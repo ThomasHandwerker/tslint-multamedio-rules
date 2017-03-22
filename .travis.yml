@@ -7,11 +7,11 @@ node_js:
 sudo: false
 
 before_script:
-  npm install
+  - npm install
 
 script:
-  npm run compile
-  npm test
+  - npm run compile
+  - npm test
 
 cache:
   directories:
