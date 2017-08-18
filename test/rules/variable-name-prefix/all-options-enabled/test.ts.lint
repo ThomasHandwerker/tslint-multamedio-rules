@@ -32,8 +32,9 @@ var gGlobalFuc2 = (aParam :string) :void {
 
 // function context
 function testFunction(aParameter, tParameter: JQuery) {
-                                  ~~~~~~~~~~                            [parameter name must start with "a" as prefix followed by an uppercase letter]
                                   ~~~~~~~~~~                            [variable name of type JQuery must start with "$" as prefix]
+                                  ~~~~~~~~~~            [parameter name must start with "a" as prefix followed by an uppercase letter]
+  
     var iInvalidFunc3 = "Wow";
         ~~~~~~~~~~~~~                   [variable name in function/method scope must start with "t" as prefix followed by an uppercase letter]
     var iNVALIDFunc4 = "there";

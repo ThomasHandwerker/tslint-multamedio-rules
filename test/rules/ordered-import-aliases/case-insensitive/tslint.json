@@ -1,4 +1,5 @@
 {
+  "rulesDirectory": "../../../../lib",
   "rules": {
     "ordered-import-aliases": true
   }

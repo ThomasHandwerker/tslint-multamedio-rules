@@ -191,36 +191,6 @@ class VariableNamePrefixWalker extends Lint.RuleWalker {
     super.visitClassDeclaration(node);
   }
 
-  public visitFunctionDeclaration(node :ts.FunctionDeclaration) :void {
-    if (this.shouldCheckParameterPrefix || this.shouldCheckJqueryPrefix) {
-      const functionParams :ts.NodeArray<ts.ParameterDeclaration> = node.parameters;
-
-      functionParams.forEach((parameter :ts.ParameterDeclaration) => {
-        this.visitParameterDeclaration(parameter);
-      });
-    }
-    if (this.shouldCheckFunctionPrefix || this.shouldCheckJqueryPrefix) {
-      const functionBlock :ts.Block | undefined = node.body;
-
-      if (!functionBlock) {
-        return;
-      }
-
-      const variableDeclarations :ts.NodeArray<ts.Statement> = functionBlock.statements;
-      variableDeclarations.forEach((statement :ts.Statement) => {
-        if (statement.kind === ts.SyntaxKind.VariableStatement) {
-          const children :ts.Node[] = statement.getChildren(this.getSourceFile());
-
-          children.forEach((childNode :ts.Node) => {
-            super.visitNode(childNode);
-          });
-        }
-      });
-    }
-
-    super.visitFunctionDeclaration(node);
-  }
-
   public visitCatchClause(node :ts.CatchClause) :void {
     const catchVariable :ts.VariableDeclaration = node.variableDeclaration;
 

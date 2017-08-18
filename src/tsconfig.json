@@ -1,5 +1,4 @@
 {
-    "version": "2.0.3",
     "compilerOptions": {
         "module": "commonjs",
         "noImplicitAny": true,
@@ -8,13 +7,11 @@
         "noUnusedParameters": true,
         "noUnusedLocals": true,
         "strictNullChecks": true,
+        "importHelpers": true,
         "declaration": true,
         "sourceMap": false,
         "target": "es5",
         "lib": ["es6"],
         "outDir": "../lib"
-    },
-    "atom": {
-        "rewriteTsconfig": false
     }
 }
